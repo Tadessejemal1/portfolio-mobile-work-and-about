@@ -233,3 +233,32 @@ form.addEventListener('submit', (event) => {
 // localStorage.setItem('testObject', JSON.stringify(testObject));
 // var retrievedObject = JSON.parse(localStorage.getItem('testObject'));
 // console.log('retrievedObject: ', retrievedObject);
+
+const inputElements = document.querySelectorAll('.contact-forms-input');
+
+const contactMessage = {
+  name: '',
+  email: '',
+  message: '',
+};
+
+function dataStorage() {
+  localStorage.setItem('dataForm', JSON.stringify(contactMessage));
+}
+
+inputElements.forEach((input) => {
+  input.addEventListener('change', () => {
+    contactMessage[input.name] = form.elements[input.name].value.trim();
+    dataStorage();
+  });
+});
+
+window.addEventListener('load', () => {
+  const inputElements = document.querySelectorAll('.contact-forms-input');
+  if (localStorage.getItem('dataForm') !== '' || localStorage.getItem('dataForm') !== null) {
+    inputElements.forEach((input) => {
+      input.value = JSON.parse(localStorage.getItem('dataForm'))[input.name];
+      contactMessage[input.name] = input.value;
+    });
+  }
+});
